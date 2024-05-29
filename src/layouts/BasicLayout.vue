@@ -4,7 +4,11 @@
       <el-header class="header">
         <GlobalHeader />
       </el-header>
-      <el-main class="content"></el-main>
+
+      <el-main class="content">
+        <router-view />
+      </el-main>
+
       <el-footer class="footer"
         ><a href="https://github.com/hyuZzz" target="_blank">
           项目地址
@@ -15,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import GlobalHeader from "../layouts/GlobalHeader.vue";
+import GlobalHeader from "../components/GlobalHeader.vue";
 </script>
 
 <style scoped>
@@ -25,6 +29,7 @@ import GlobalHeader from "../layouts/GlobalHeader.vue";
 #basicLayout .header {
   margin-bottom: 16px;
   box-shadow: #eee 1px 1px 5px;
+  border-bottom: 1px solid #dcdfe6;
 }
 
 #basicLayout .content {

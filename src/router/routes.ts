@@ -1,11 +1,20 @@
 import { RouteRecordRaw } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
+import LoginView from "@/components/LoginView.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "home",
     component: HomeView,
+  },
+  {
+    path: "/login",
+    name: "用户登录",
+    component: LoginView,
+    meta: {
+      hideInMenu: true, // 隐藏菜单
+    },
   },
   {
     path: "/about",
