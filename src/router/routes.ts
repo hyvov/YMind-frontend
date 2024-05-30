@@ -1,6 +1,9 @@
 import { RouteRecordRaw } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import LoginView from "@/components/LoginView.vue";
+import UserLayout from "@/layouts/UserLayout.vue";
+import ACCESS_ENUM from "@/access/accessEnum";
+import NoAuthPage from "@/views/NoAuthPage.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -9,9 +12,45 @@ export const routes: Array<RouteRecordRaw> = [
     component: HomeView,
   },
   {
-    path: "/login",
-    name: "用户登录",
-    component: LoginView,
+    path: "/admin",
+    name: "管理页面",
+    component: HomeView,
+    meta: {
+      access: ACCESS_ENUM.ADMIN,
+    },
+  },
+  {
+    path: "/",
+    name: "无权限",
+    component: NoAuthPage,
+    meta: {
+      hideInMenu: true,
+    },
+  },
+  {
+    path: "/hide",
+    name: "隐藏页面",
+    component: HomeView,
+    meta: {
+      hideInMenu: true,
+    },
+  },
+  {
+    path: "/user",
+    name: "用户",
+    component: UserLayout,
+    children: [
+      {
+        path: "/user/login",
+        name: "用户登录",
+        component: LoginView,
+      },
+      {
+        path: "/user/register",
+        name: "用户注册",
+        component: LoginView,
+      },
+    ],
     meta: {
       hideInMenu: true, // 隐藏菜单
     },

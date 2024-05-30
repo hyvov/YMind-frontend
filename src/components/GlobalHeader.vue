@@ -28,28 +28,64 @@
       </div>
     </el-col>
     <el-col :span="1">
-      <el-button type="primary" href="/user/login">登录</el-button>
+      <div v-if="loginUserStore.loginUser.id">
+        {{ loginUserStore.loginUser.userName ?? "无名" }}
+      </div>
+      <div v-else>
+        <a-button type="primary" href="/user/login">登录</a-button>
+      </div>
     </el-col>
   </el-row>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { routes } from "@/router/routes";
 import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 
-const selectedIndex = ref(["/"]); // 初始时选中第一个菜单项
+import { useLoginUserStore } from "@/store/userStore";
+import checkAccess from "@/access/checkAccess";
+const loginUserStore = useLoginUserStore();
+
 const router = useRouter();
-
+const route = useRoute();
+const selectedIndex = ref(["/"]);
 router.afterEach((to, from, failure) => {
   console.log("selectedIndex" + selectedIndex.value);
   selectedIndex.value = [to.path];
 });
 
-const visibleRoutes = routes.filter((item) => {
-  if (item.meta?.hideInMenu) {
-    return false;
-  }
-  return true;
+// const selectedIndex = ref(route.path); // 初始时选中第一个菜单项
+// watch(
+//   () => route.path,
+//   (newPath, oldPath) => {
+//     console.log("selectedIndex" + selectedIndex.value);
+//     selectedIndex.value = newPath;
+//   }
+// );
+
+// const visibleRoutes = routes.filter((item) => {
+//   if (item.meta?.hideInMenu) {
+//     return false;
+//   }
+//   // 根据权限过滤菜单
+//   if (!checkAccess(loginUserStore.loginUser, item.meta?.access as string)) {
+//     return false;
+//   }
+//   return true;
+// });
+// 展示在菜单栏的路由数组
+const visibleRoutes = computed(() => {
+  return routes.filter((item) => {
+    if (item.meta?.hideInMenu) {
+      return false;
+    }
+    // 根据权限过滤菜单
+    if (!checkAccess(loginUserStore.loginUser, item.meta?.access as string)) {
+      return false;
+    }
+    return true;
+  });
 });
 const doMenuClick = (key: string) => {
   console.log("key:" + key);
@@ -81,8 +117,8 @@ const doMenuClick = (key: string) => {
 }
 
 .title {
-  color: black;
-  margin-left: 5px;
   margin-right: 20px;
+  margin-left: 5px;
+  color: black;
 }
 </style>

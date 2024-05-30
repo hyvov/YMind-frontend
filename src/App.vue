@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <template v-if="route.path.startsWith('/user')">
-      <UserLayout />
+      <router-view />
+      <div></div>
     </template>
     <template v-else>
       <BasicLayout />
@@ -14,6 +15,8 @@ import BasicLayout from "@/layouts/BasicLayout.vue";
 import UserLayout from "@/layouts/UserLayout.vue";
 import { useRoute } from "vue-router";
 import { onMounted } from "vue";
+import { getLoginUserUsingGet } from "@/api/userController";
+import { useLoginUserStore } from "@/store/userStore";
 
 const route = useRoute();
 
@@ -26,6 +29,10 @@ const doInit = () => {
 
 onMounted(() => {
   doInit();
+});
+
+getLoginUserUsingGet().then((res) => {
+  console.log(res);
 });
 </script>
 
