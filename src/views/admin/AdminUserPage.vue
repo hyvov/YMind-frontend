@@ -1,25 +1,33 @@
 <template>
-  <a-form
+  <el-form
     :model="formSearchParams"
-    :style="{ marginBottom: '20px' }"
-    layout="inline"
+    :style="{ marginBottom: '50px' }"
+    inline="true"
     @submit="doSearch"
   >
-    <a-form-item field="userName" label="用户名">
-      <a-input v-model="formSearchParams.userName" placeholder="请输入用户名" />
-    </a-form-item>
-    <a-form-item field="userProfile" label="用户简介">
-      <a-input
+    <el-form-item field="userName" label="用户名">
+      <el-input
+        v-model="formSearchParams.userName"
+        placeholder="请输入用户名"
+      />
+    </el-form-item>
+    <el-form-item field="userProfile" label="用户简介">
+      <el-input
         v-model="formSearchParams.userProfile"
         placeholder="请输入用户简介"
       />
-    </a-form-item>
-    <a-form-item>
-      <a-button type="primary" html-type="submit" style="width: 100px">
+    </el-form-item>
+    <el-form-item>
+      <el-button
+        type="primary"
+        @click="doSearch"
+        html-type="submit"
+        style="width: 100px"
+      >
         搜索
-      </a-button>
-    </a-form-item>
-  </a-form>
+      </el-button>
+    </el-form-item>
+  </el-form>
   <a-table
     :columns="columns"
     :data="dataList"
@@ -32,12 +40,24 @@
     @page-change="onPageChange"
   >
     <template #userAvatar="{ record }">
-      <a-image width="64" :src="record.userAvatar" />
+      <el-image
+        style="width: 50px; height: 50px"
+        width="64"
+        :src="record.userAvatar"
+        :zoom-rate="1.2"
+        :max-scale="7"
+        :min-scale="0.2"
+        :preview-src-list="[record.userAvatar]"
+        :initial-index="4"
+        fit="cover"
+      />
     </template>
     <template #optional="{ record }">
-      <a-space>
-        <a-button status="danger" @click="doDelete(record)">删除</a-button>
-      </a-space>
+      <el-space>
+        <el-button type="danger" @click="doDelete(record)" round
+          >删除
+        </el-button>
+      </el-space>
     </template>
   </a-table>
 </template>
@@ -56,7 +76,7 @@ const formSearchParams = ref<API.UserQueryRequest>({});
 // 初始化搜索条件（不应该被修改）
 const initSearchParams = {
   current: 1,
-  pageSize: 10,
+  pageSize: 5,
 };
 
 const searchParams = ref<API.UserQueryRequest>({
