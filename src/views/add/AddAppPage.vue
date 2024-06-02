@@ -1,60 +1,65 @@
 <template>
   <div id="addAppPage">
     <h2 style="margin-bottom: 32px">创建应用</h2>
-    <a-form
+    <el-form
       :model="form"
       :style="{ width: '480px' }"
       label-align="left"
       auto-label-width
       @submit="handleSubmit"
     >
-      <a-form-item field="appName" label="应用名称">
-        <a-input v-model="form.appName" placeholder="请输入应用名称" />
-      </a-form-item>
-      <a-form-item field="appDesc" label="应用描述">
-        <a-input v-model="form.appDesc" placeholder="请输入应用描述" />
-      </a-form-item>
-      <a-form-item field="appIcon" label="应用图标">
-        <a-input v-model="form.appIcon" placeholder="请输入应用图标" />
-      </a-form-item>
+      <el-form-item field="appName" label="应用名称">
+        <el-input v-model="form.appName" placeholder="请输入应用名称" />
+      </el-form-item>
+      <el-form-item field="appDesc" label="应用描述">
+        <el-input v-model="form.appDesc" placeholder="请输入应用描述" />
+      </el-form-item>
+      <el-form-item field="appIcon" label="应用图标">
+        <el-input v-model="form.appIcon" placeholder="请输入应用图标" />
+      </el-form-item>
       <!--      <a-form-item field="appIcon" label="应用图标">-->
       <!--        <PictureUploader-->
       <!--          :value="form.appIcon"-->
       <!--          :onChange="(value) => (form.appIcon = value)"-->
       <!--        />-->
       <!--      </a-form-item>-->
-      <a-form-item field="appType" label="应用类型">
-        <a-select
+      <el-form-item field="appType" label="应用类型">
+        <el-select
           v-model="form.appType"
           :style="{ width: '320px' }"
           placeholder="请选择应用类型"
         >
-          <a-option
+          <el-option
             v-for="(value, key) of APP_TYPE_MAP"
             :value="Number(key)"
             :label="value"
           />
-        </a-select>
-      </a-form-item>
-      <a-form-item field="scoringStrategy" label="评分策略">
-        <a-select
+        </el-select>
+      </el-form-item>
+      <el-form-item field="scoringStrategy" label="评分策略">
+        <el-select
           v-model="form.scoringStrategy"
           :style="{ width: '320px' }"
           placeholder="请选择评分策略"
         >
-          <a-option
+          <el-option
             v-for="(value, key) of APP_SCORING_STRATEGY_MAP"
             :value="Number(key)"
             :label="value"
           />
-        </a-select>
-      </a-form-item>
-      <a-form-item>
-        <a-button type="primary" html-type="submit" style="width: 120px">
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          type="primary"
+          @click="handleSubmit"
+          html-type="submit"
+          style="width: 120px"
+        >
           提交
-        </a-button>
-      </a-form-item>
-    </a-form>
+        </el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -131,10 +136,10 @@ const handleSubmit = async () => {
     res = await addAppUsingPost(form.value);
   }
   if (res.data.code === 0) {
-    message.success("操作成功，即将跳转到应用详情页");
+    message.success("操作成功，请等待管理员审核。审核通过将展示至应用详情页");
     setTimeout(() => {
-      router.push(`/app/detail/${props.id ?? res.data.data}`);
-    }, 3000);
+      router.push(`/app/detail/${props.id || res.data.data}`);
+    }, 1000);
   } else {
     message.error("操作失败，" + res.data.message);
   }
