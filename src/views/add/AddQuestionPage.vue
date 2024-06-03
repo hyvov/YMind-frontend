@@ -14,11 +14,14 @@
       <el-form-item label="题目列表" :content-flex="false" :merge-props="false">
         <el-space size="medium">
           <el-button @click="addQuestion(questionContent.length)">
-            添加题目
+            底部添加题目
           </el-button>
           <AiGenerateQuestionDrawer
             :appId="appId"
             :onSuccess="onAiGenerateSuccess"
+            :onSSESuccess="onAiGenerateSuccessSSE"
+            :onSSEClose="onSSEClose"
+            :onSSEStart="onSSEStart"
           />
         </el-space>
 
@@ -209,6 +212,7 @@ const loadData = async () => {
     if (oldQuestion.value) {
       questionContent.value = oldQuestion.value.questionContent ?? [];
     }
+    message.success("获取数据成功，" + res.data.message);
   } else {
     message.error("获取数据失败，" + res.data.message);
   }
@@ -227,18 +231,21 @@ const handleSubmit = async () => {
     return;
   }
   let res: any;
+
   // 如果是修改
   if (oldQuestion.value?.id) {
     res = await editQuestionUsingPost({
       id: oldQuestion.value.id,
       questionContent: questionContent.value,
     });
+    console.log("修改成功");
   } else {
-    // 创建
-    res = await addQuestionUsingPost({
-      appId: props.appId as any,
-      questionContent: questionContent.value,
-    });
+    // // 创建
+    // res = await addQuestionUsingPost({
+    //   appId: props.appId as any,
+    //   questionContent: questionContent.value,
+    // });
+    console.log("创建成功");
   }
   if (res.data.code === 0) {
     message.success("操作成功，即将跳转到应用详情页");
@@ -255,6 +262,18 @@ const handleSubmit = async () => {
 const onAiGenerateSuccess = (result: API.QuestionContentDTO[]) => {
   questionContent.value = [...questionContent.value, ...result];
   message.success(`AI 生成题目成功，已新增 ${result.length} 道题目`);
+};
+/*
+ * AI 实时生成题目执行
+ */
+const onAiGenerateSuccessSSE = (result: API.QuestionContentDTO[]) => {
+  questionContent.value = [...questionContent.value, result];
+};
+const onSSEStart = (event: any) => {
+  message.success("开始生成");
+};
+const onSSEClose = (event: any) => {
+  message.success("生成完毕");
 };
 const myAxios = axios.create({
   baseURL: "http://localhost:8101",
