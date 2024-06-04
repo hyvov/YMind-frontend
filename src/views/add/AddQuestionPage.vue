@@ -240,11 +240,11 @@ const handleSubmit = async () => {
     });
     console.log("修改成功");
   } else {
-    // // 创建
-    // res = await addQuestionUsingPost({
-    //   appId: props.appId as any,
-    //   questionContent: questionContent.value,
-    // });
+    // 创建
+    res = await addQuestionUsingPost({
+      appId: props.appId as any,
+      questionContent: questionContent.value,
+    });
     console.log("创建成功");
   }
   if (res.data.code === 0) {
