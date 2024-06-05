@@ -21,11 +21,23 @@
         <a-input v-model="form.resultDesc" placeholder="请输入结果描述" />
       </a-form-item>
       <a-form-item field="resultPicture" label="结果图标">
-        <a-input
+        <!--        <a-input-->
+        <!--          v-model="form.resultPicture"-->
+        <!--          placeholder="请输入结果图标地址"-->
+        <!--        />-->
+        <PictureUploader
+          biz="score_result_picture"
           v-model="form.resultPicture"
-          placeholder="请输入结果图标地址"
+          :onChange="(value) => (form.resultPicture = value)"
         />
       </a-form-item>
+      <!--      <a-form-item field="resultPicture" label="结果图标">-->
+      <!--        <PictureUploader-->
+      <!--          biz="score_result_picture"-->
+      <!--          v-model="form.resultPicture"-->
+      <!--          :onChange="(value) => (form.resultPicture = value)"-->
+      <!--        />-->
+      <!--      </a-form-item>-->
       <a-form-item field="resultProp" label="结果集">
         <a-input-tag
           v-model="form.resultProp"
@@ -61,6 +73,7 @@ import {
   editScoringResultUsingPost,
 } from "@/api/scoringResultController";
 import message from "@arco-design/web-vue/es/message";
+import PictureUploader from "@/components/PictureUploader.vue";
 
 interface Props {
   appId: string;
@@ -99,12 +112,14 @@ const handleSubmit = async () => {
   let res: any;
   // 如果是修改
   if (updateId.value) {
+    console.log("修改" + updateId.value);
     res = await editScoringResultUsingPost({
       id: updateId.value as any,
       ...form.value,
     });
   } else {
     // 创建
+    console.log("创建" + updateId.value);
     res = await addScoringResultUsingPost({
       appId: props.appId as any,
       ...form.value,

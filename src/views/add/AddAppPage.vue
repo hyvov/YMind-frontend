@@ -14,15 +14,22 @@
       <el-form-item field="appDesc" label="应用描述">
         <el-input v-model="form.appDesc" placeholder="请输入应用描述" />
       </el-form-item>
-      <el-form-item field="appIcon" label="应用图标">
-        <el-input v-model="form.appIcon" placeholder="请输入应用图标" />
-      </el-form-item>
+      <!--      <el-form-item field="appIcon" label="应用图标">-->
+      <!--        <el-input v-model="form.appIcon" placeholder="请输入应用图标" />-->
+      <!--      </el-form-item>-->
       <!--      <a-form-item field="appIcon" label="应用图标">-->
-      <!--        <PictureUploader-->
-      <!--          :value="form.appIcon"-->
-      <!--          :onChange="(value) => (form.appIcon = value)"-->
-      <!--        />-->
-      <!--      </a-form-item>-->
+      <!--      <PictureUploader-->
+      <!--        biz="app_icon"-->
+      <!--        v-model="form.appIcon"-->
+      <!--        :onChange="(value) => (form.appIcon = value)"-->
+      <!--      />-->
+      <a-form-item field="appIcon" label="应用图标">
+        <PictureUploader
+          biz="app_icon"
+          v-model="form.appIcon"
+          :onChange="(value) => (form.appIcon = value)"
+        />
+      </a-form-item>
       <el-form-item field="appType" label="应用类型">
         <el-select
           v-model="form.appType"
@@ -74,6 +81,7 @@ import {
   getAppVoByIdUsingGet,
 } from "@/api/appController";
 import { APP_SCORING_STRATEGY_MAP, APP_TYPE_MAP } from "@/constant/app";
+import PictureUploader from "@/components/PictureUploader.vue";
 
 interface Props {
   id: string;

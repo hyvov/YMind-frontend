@@ -36,7 +36,7 @@
             <a-button v-if="isMy" :href="`/add/scoring_result/${id}`"
               >设置评分
             </a-button>
-            <a-button v-if="isMy" :href="`/add/app/${id}`">修改应用</a-button>
+            <a-button v-if="isMy" :href="`/add/app/${id}`"> 修改应用 </a-button>
           </a-space>
         </a-col>
         <a-col flex="320px">

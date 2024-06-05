@@ -1,7 +1,7 @@
 <template>
   <div id="addQuestionPage">
     <h2 style="margin-bottom: 32px">设置题目</h2>
-    <el-form
+    <a-form
       :model="questionContent"
       :style="{ width: '480px' }"
       label-align="left"
@@ -104,7 +104,7 @@
           提交
         </el-button>
       </el-form-item>
-    </el-form>
+    </a-form>
   </div>
 </template>
 <style scoped>
@@ -120,11 +120,13 @@ import { useRouter } from "vue-router";
 import {
   addQuestionUsingPost,
   editQuestionUsingPost,
+  listMyQuestionVoByPageUsingPost,
   listQuestionVoByPageUsingPost,
 } from "@/api/questionController";
 import message from "@arco-design/web-vue/es/message";
 import AiGenerateQuestionDrawer from "@/views/add/components/AiGenerateQuestionDrawer.vue";
 import axios from "axios";
+import { listMyAppVoByPageUsingPost } from "@/api/appController";
 
 interface Props {
   appId: string;
@@ -212,7 +214,6 @@ const loadData = async () => {
     if (oldQuestion.value) {
       questionContent.value = oldQuestion.value.questionContent ?? [];
     }
-    message.success("获取数据成功，" + res.data.message);
   } else {
     message.error("获取数据失败，" + res.data.message);
   }
@@ -234,18 +235,18 @@ const handleSubmit = async () => {
 
   // 如果是修改
   if (oldQuestion.value?.id) {
+    console.log("修改成功oldquestionid" + oldQuestion.value.id);
     res = await editQuestionUsingPost({
       id: oldQuestion.value.id,
       questionContent: questionContent.value,
     });
-    console.log("修改成功");
   } else {
     // 创建
+    console.log("创建成功");
     res = await addQuestionUsingPost({
       appId: props.appId as any,
       questionContent: questionContent.value,
     });
-    console.log("创建成功");
   }
   if (res.data.code === 0) {
     message.success("操作成功，即将跳转到应用详情页");
