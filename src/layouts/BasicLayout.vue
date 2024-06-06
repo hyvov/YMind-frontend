@@ -10,7 +10,7 @@
       </el-main>
 
       <el-footer class="footer"
-        ><a href="https://github.com/hyuZzz" target="_blank">
+        ><a href="https://github.com/hyvov" target="_blank">
           项目地址
         </a></el-footer
       >
