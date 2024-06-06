@@ -7,7 +7,7 @@
     <template #cover>
       <div
         :style="{
-          height: '204px',
+          height: '234px',
           overflow: 'hidden',
         }"
       >
@@ -21,17 +21,16 @@
     <a-card-meta :title="app.appName" :description="app.appDesc">
       <template #avatar>
         <div
-          :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }"
-        >
-          <a-avatar
-            :size="24"
-            :image-url="app.user?.userAvatar"
-            :style="{ marginRight: '8px' }"
-          />
-          <a-typography-text
-            >{{ app.user?.userName ?? "无名" }}
-          </a-typography-text>
-        </div>
+          :style="{ display: 'flex', alignItems: 'center', color: '#1D2129'}"
+        ></div>
+        <a-avatar
+          :size="24"
+          :image-url="app.user?.userAvatar"
+          :style="{ marginRight: '8px' }"
+        />
+        <a-typography-text
+          >{{ app.user?.userName ?? "无名" }}
+        </a-typography-text>
       </template>
     </a-card-meta>
   </a-card>
@@ -94,6 +93,8 @@ const doShare = (e: Event) => {
   border-radius: 50%;
   transition: all 0.1s;
 }
+
+
 
 .icon-hover:hover {
   background-color: rgb(var(--gray-2));

@@ -1,7 +1,11 @@
 import axios from "axios";
 
+// 是否是开发环境
+export const isDev = process.env.NODE_ENV === "development";
+
+// 创建 Axios 实例
 const myAxios = axios.create({
-  baseURL: "http://localhost:8101",
+  baseURL: isDev ? "http://localhost:8101" : "http://118.25.185.81:8101",
   timeout: 60000,
   withCredentials: true,
 });
