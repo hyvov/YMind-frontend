@@ -1,7 +1,11 @@
 <template>
   <div id="appStatisticPage">
     <h2>热门应用统计</h2>
-    <v-chart :option="appAnswerCountOptions" style="height: 300px" />
+    <v-chart
+      :option="appAnswerCountOptions"
+      style="height: 300px"
+      @click="onBarClick"
+    />
     <h2>应用结果统计</h2>
     <div class="search-bar">
       <a-input-search
@@ -64,6 +68,16 @@ const appAnswerCountOptions = computed(() => {
     ],
   };
 });
+
+const onBarClick = (params: any) => {
+  if (params.componentType === "series" && params.seriesType === "bar") {
+    const dataIndex = params.dataIndex; // 获取点击的柱状图索引
+    const appId = appAnswerCountList.value[dataIndex].appId; // 获取对应的 appId
+    console.log("Clicked bar with appId:", appId);
+    // 调用自定义的搜索方法，并将 appId 作为参数传递
+    loadAppAnswerResultCountData(appId as any);
+  }
+};
 
 /**
  * 加载数据

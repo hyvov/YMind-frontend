@@ -35,7 +35,12 @@
           >
             {{ submitting ? "评分中" : "查看结果" }}
           </a-button>
-          <a-button v-if="current > 1" circle @click="current -= 1">
+          <a-button
+            v-if="current > 1"
+            circle
+            @click="current -= 1"
+            :disabled="!currentAnswer"
+          >
             上一题
           </a-button>
         </a-space>

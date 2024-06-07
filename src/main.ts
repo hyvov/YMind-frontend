@@ -5,10 +5,9 @@ import store from "./store";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import "@/access";
-
 import ArcoVue from "@arco-design/web-vue";
 import "@arco-design/web-vue/dist/arco.css";
-
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import { createPinia } from "pinia";
 
 const pinia = createPinia();

@@ -28,11 +28,7 @@ export const routes: Array<RouteRecordRaw> = [
     name: "主页",
     component: HomeView,
   },
-  {
-    path: "/add/app",
-    name: "创建应用",
-    component: AddAppPage,
-  },
+
   {
     path: "/add/app/:id",
     name: "修改应用",
@@ -86,6 +82,14 @@ export const routes: Array<RouteRecordRaw> = [
     props: true,
     meta: {
       hideInMenu: true,
+      access: ACCESS_ENUM.USER,
+    },
+  },
+  {
+    path: "/add/app",
+    name: "创建应用",
+    component: AddAppPage,
+    meta: {
       access: ACCESS_ENUM.USER,
     },
   },
@@ -161,6 +165,7 @@ export const routes: Array<RouteRecordRaw> = [
       hideInMenu: true,
     },
   },
+
   {
     path: "/user",
     name: "用户",

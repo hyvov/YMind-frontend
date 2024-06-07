@@ -1,20 +1,24 @@
 <template>
   <el-form
     :model="formSearchParams"
-    :style="{ marginBottom: '50px' }"
+    :style="{ marginBottom: '5px' }"
     inline="true"
     @submit="doSearch"
   >
     <el-form-item field="userName" label="用户名">
       <el-input
+        style="width: 200px"
         v-model="formSearchParams.userName"
         placeholder="请输入用户名"
+        clearable
       />
     </el-form-item>
     <el-form-item field="userProfile" label="用户简介">
       <el-input
+        style="width: 240px"
         v-model="formSearchParams.userProfile"
         placeholder="请输入用户简介"
+        clearable
       />
     </el-form-item>
     <el-form-item>
@@ -29,7 +33,7 @@
     </el-form-item>
   </el-form>
 
-  <el-table :data="dataList" style="width: 100%" height="625px">
+  <el-table :data="dataList" style="width: 100%" height="675px">
     <el-table-column prop="id" label="id" width="200" />
     <el-table-column prop="userAccount" label="账号" width="150" />
     <el-table-column prop="userName" label="用户名" width="200" />

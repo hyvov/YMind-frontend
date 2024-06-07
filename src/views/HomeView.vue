@@ -1,13 +1,31 @@
 <template>
   <div id="homePage">
     <div class="searchBar">
-      <a-input-search
-        :style="{ width: '320px' }"
-        placeholder="快速发现答题应用"
-        button-text="搜索"
-        size="large"
-        search-button
-      />
+      <el-form
+        :model="formSearchParams"
+        :style="{ marginBottom: '5px' }"
+        inline="true"
+        @submit="doSearch"
+      >
+        <el-form-item field="userName" label="用户名">
+          <el-input
+            style="width: 200px"
+            v-model="formSearchParams.appName"
+            placeholder="请输入App名字"
+            size="large"
+            clearable
+          />
+          <el-button
+            type="primary"
+            @click="doSearch"
+            html-type="submit"
+            size="large"
+            style="width: 70px"
+          >
+            搜索
+          </el-button>
+        </el-form-item>
+      </el-form>
     </div>
     <a-list
       class="list-demo-action-layout"
@@ -35,7 +53,9 @@ import API from "@/api";
 import { listAppVoByPageUsingPost } from "@/api/appController";
 import message from "@arco-design/web-vue/es/message";
 import { REVIEW_STATUS_ENUM } from "@/constant/app";
+import { Edit } from "@element-plus/icons-vue";
 
+const formSearchParams = ref<API.AppQueryRequest>({});
 // 初始化搜索条件（不应该被修改）
 const initSearchParams = {
   current: 1,
@@ -63,6 +83,16 @@ const loadData = async () => {
   } else {
     message.error("获取数据失败，" + res.data.message);
   }
+};
+
+/**
+ * 执行搜索
+ */
+const doSearch = () => {
+  searchParams.value = {
+    ...initSearchParams,
+    ...formSearchParams.value,
+  };
 };
 
 /**

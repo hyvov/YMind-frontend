@@ -31,16 +31,16 @@ import GlobalHeader from "../components/GlobalHeader.vue";
   border-bottom: 1px solid #dcdfe6;
   box-shadow: #eee 1px 1px 5px;
 }
-#basicLayout .content .routerView{
 
+#basicLayout .content .routerView {
   max-width: 1200px;
   margin: 0 auto 28px;
-
 }
+
 #basicLayout .content {
   box-sizing: border-box;
   width: 100%;
-  margin-bottom:28px;
+  margin-bottom: 28px;
   padding: 20px;
   background: linear-gradient(to right, #fefefe, #fff);
 }

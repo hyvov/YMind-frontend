@@ -21,7 +21,7 @@
     <a-card-meta :title="app.appName" :description="app.appDesc">
       <template #avatar>
         <div
-          :style="{ display: 'flex', alignItems: 'center', color: '#1D2129'}"
+          :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }"
         ></div>
         <a-avatar
           :size="24"
@@ -93,8 +93,6 @@ const doShare = (e: Event) => {
   border-radius: 50%;
   transition: all 0.1s;
 }
-
-
 
 .icon-hover:hover {
   background-color: rgb(var(--gray-2));
