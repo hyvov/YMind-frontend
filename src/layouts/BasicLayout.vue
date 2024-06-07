@@ -46,6 +46,7 @@ import GlobalHeader from "../components/GlobalHeader.vue";
 }
 
 #basicLayout .footer {
+  max-height: 45px;
   position: fixed;
   right: 0;
   bottom: 0;

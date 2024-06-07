@@ -1,70 +1,108 @@
 <template>
-  <a-form
+  <el-form
     :model="formSearchParams"
-    :style="{ marginBottom: '20px' }"
-    layout="inline"
+    :style="{ marginBottom: '5px' }"
+    inline="true"
     @submit="doSearch"
   >
-    <a-form-item field="resultName" label="结果名称">
-      <a-input
+    <el-form-item field="resultName" label="结果名称">
+      <el-input
         v-model="formSearchParams.resultName"
         placeholder="请输入结果名称"
         allow-clear
       />
-    </a-form-item>
-    <a-form-item field="resultDesc" label="结果描述">
-      <a-input
+    </el-form-item>
+    <el-form-item field="resultDesc" label="结果描述">
+      <el-input
         v-model="formSearchParams.resultDesc"
         placeholder="请输入结果描述"
         allow-clear
       />
-    </a-form-item>
-    <a-form-item field="appId" label="应用 id">
-      <a-input
+    </el-form-item>
+    <el-form-item field="appId" label="应用 id">
+      <el-input
         v-model="formSearchParams.appId"
         placeholder="请输入应用 id"
         allow-clear
       />
-    </a-form-item>
-    <a-form-item field="userId" label="用户 id">
-      <a-input
+    </el-form-item>
+    <el-form-item field="userId" label="用户 id">
+      <el-input
         v-model="formSearchParams.userId"
         placeholder="请输入用户 id"
         allow-clear
       />
-    </a-form-item>
-    <a-form-item>
-      <a-button type="primary" html-type="submit" style="width: 100px">
+    </el-form-item>
+    <el-form-item>
+      <el-button
+        type="primary"
+        html-type="submit"
+        style="width: 100px"
+        @click="doSearch"
+      >
         搜索
-      </a-button>
-    </a-form-item>
-  </a-form>
-  <a-table
-    :columns="columns"
-    :data="dataList"
-    :pagination="{
-      showTotal: true,
-      pageSize: searchParams.pageSize,
-      current: searchParams.current,
-      total,
-    }"
-    @page-change="onPageChange"
-  >
-    <template #resultPicture="{ record }">
-      <a-image width="64" :src="record.resultPicture" />
-    </template>
-    <template #createTime="{ record }">
-      {{ dayjs(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
-    </template>
-    <template #updateTime="{ record }">
-      {{ dayjs(record.updateTime).format("YYYY-MM-DD HH:mm:ss") }}
-    </template>
-    <template #optional="{ record }">
-      <a-space>
-        <a-button status="danger" @click="doDelete(record)">删除</a-button>
-      </a-space>
-    </template>
-  </a-table>
+      </el-button>
+    </el-form-item>
+  </el-form>
+
+  <el-table :data="dataList" style="width: 100%" height="675px">
+    <el-table-column prop="id" label="id" width="100" />
+    <el-table-column prop="resultName" label="名称" width="200" />
+    <el-table-column prop="resultDesc" label="描述" width="350" />
+    <el-table-column label="结果图片" width="150">
+      <template #default="scope">
+        <!-- 自定义插槽 -->
+        <el-image
+          class="el-image"
+          :src="scope.row.resultPicture"
+          style="width: 100px; height: 100px; z-index: 1000"
+          :preview-src-list="[scope.row.resultPicture]"
+          preview-teleported="true"
+          fit="contain"
+        >
+        </el-image>
+      </template>
+    </el-table-column>
+    <el-table-column prop="resultProp" label="结果属性" width="150" />
+    <el-table-column prop="resultScoreRange" label="评分范围" width="150" />
+    <el-table-column prop="appId" label="应用 id" width="200" />
+    <el-table-column prop="userId" label="用户 id" width="100" />
+    <!--    <el-table-column prop="createTime" label="创建时间" width="300" />-->
+    <el-table-column label="创建时间" width="200">
+      <template #default="scope">
+        <span>{{
+          dayjs(scope.row.createTime).format("YYYY-MM-DD HH:MM:ss")
+        }}</span>
+      </template>
+    </el-table-column>
+    <!--    <el-table-column prop="updateTime" label="更新时间" width="300" />-->
+    <el-table-column label="更新时间" width="200">
+      <template #default="scope">
+        <span>{{
+          dayjs(scope.row.updateTime).format("YYYY/MM/DD HH:MM:ss")
+        }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column fixed="right" label="操作" width="100">
+      <template #default="scope">
+        <el-space>
+          <el-button type="danger" @click="doDelete(scope.row)" round
+            >删除
+          </el-button>
+        </el-space>
+      </template>
+    </el-table-column>
+  </el-table>
+  <!--  <div>共有{{ total }}条</div>-->
+  <el-pagination
+    background
+    :total="total"
+    :page-size="searchParams.pageSize"
+    :current-page="searchParams.current"
+    @current-change="onPageChange"
+    layout="prev, pager, next"
+    style="display: flex; justify-content: center"
+  />
 </template>
 
 <script setup lang="ts">
@@ -98,7 +136,16 @@ const loadData = async () => {
   const res = await listScoringResultByPageUsingPost(searchParams.value);
   if (res.data.code === 0) {
     dataList.value = res.data.data?.records || [];
-    total.value = res.data.data?.total || 0;
+    // total.value = res.data.data?.total || 0;
+    // total.value = res.data.data?.total || 1;
+    // 细化的 total 赋值逻辑 上面的操作不知道为什么无法在el分页组件中无法读取total值
+
+    if (res.data.data?.total) {
+      const parsedTotal = Number(res.data.data?.total);
+      total.value = parsedTotal;
+    } else {
+      total.value = Number(1);
+    }
   } else {
     message.error("获取数据失败，" + res.data.message);
   }
