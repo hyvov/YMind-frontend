@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <template v-if="route.path.startsWith('/user')">
+    <template
+      v-if="
+        route.path.startsWith('/user/login') ||
+        route.path.startsWith('/user/register')
+      "
+    >
       <router-view />
       <div></div>
     </template>

@@ -29,7 +29,31 @@
     </el-col>
     <el-col :span="1">
       <div v-if="loginUserStore.loginUser.id">
-        {{ loginUserStore.loginUser.userName ?? "无名" }}
+        <!--        {{ loginUserStore.loginUser.userName ?? "无名" }}-->
+        <!--        <a-button type="primary" @click="logout">注销</a-button>-->
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            <el-image
+              style="width: 40px; height: 40px"
+              :src="loginUserStore.loginUser.userAvatar"
+            />
+            {{ loginUserStore.loginUser.userName ?? "无名" }}
+            <!--            {{ loginUserStore.loginUser.userName ?? "无名" }}-->
+            <el-icon class="el-icon--right">
+              <arrow-down />
+            </el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>
+                <a-anchor-link href="/user/info">个人信息</a-anchor-link>
+              </el-dropdown-item>
+              <!--              <el-dropdown-item>Action 2</el-dropdown-item>-->
+              <!--              <el-dropdown-item disabled>Action 4</el-dropdown-item>-->
+              <el-dropdown-item divided @click="logout">注销</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
       <div v-else>
         <a-button type="primary" href="/user/login">登录</a-button>
@@ -42,9 +66,10 @@ import { computed, ref, watch } from "vue";
 import { routes } from "@/router/routes";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
-
+import { userLogoutUsingPost } from "@/api/userController";
 import { useLoginUserStore } from "@/store/userStore";
 import checkAccess from "@/access/checkAccess";
+
 const loginUserStore = useLoginUserStore();
 
 const router = useRouter();
@@ -87,6 +112,7 @@ const visibleRoutes = computed(() => {
     return true;
   });
 });
+
 const doMenuClick = (key: string) => {
   console.log("key:" + key);
   router.push({
@@ -101,6 +127,12 @@ const doMenuClick = (key: string) => {
 //     path: key,
 //   });
 // };
+
+// 用户注销
+const logout = () => {
+  userLogoutUsingPost();
+  location.reload();
+};
 </script>
 
 <style scoped>

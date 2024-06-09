@@ -5,7 +5,7 @@ export const isDev = process.env.NODE_ENV === "development";
 
 // 创建 Axios 实例
 const myAxios = axios.create({
-  baseURL: isDev ? "http://localhost:8101" : "http://127.25.185.81/api",
+  baseURL: isDev ? "http://localhost:8101" : "http://118.25.185.81",
   timeout: 60000,
   withCredentials: true,
 });
@@ -13,12 +13,36 @@ const myAxios = axios.create({
 // 全局请求拦截器
 myAxios.interceptors.request.use(
   function (config) {
+    // 假设token存在localStorage中
+    const token = localStorage.getItem("token");
+    console.log("token:", token);
+    if (token) {
+      config.headers.Authorization = token;
+    }
+    // 在发送请求之前做些什么
     return config;
   },
   function (error) {
+    // 对请求错误做些什么
     return Promise.reject(error);
   }
 );
+
+// 携带token方式登录
+// axios.interceptors.request.use(
+//   (config) => {
+//     // 假设token存在localStorage中
+//     const token = localStorage.getItem("token");
+//     console.log("token:", token);
+//     if (token) {
+//       config.headers.Authorization = token;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
 
 // 全局响应拦截器
 myAxios.interceptors.response.use(

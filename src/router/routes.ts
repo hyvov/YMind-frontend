@@ -21,6 +21,7 @@ import AdminScoringResultPage from "@/views/admin/AdminScoringResultPage.vue";
 import AdminUserAnswerPage from "@/views/admin/AdminUserAnswerPage.vue";
 import HomePage from "@/views/HomePage.vue";
 import AppStatisticPage from "@/views/statistic/AppStatisticPage.vue";
+import UserInfoView from "@/views/UserInfoView.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -180,6 +181,12 @@ export const routes: Array<RouteRecordRaw> = [
         path: "/user/register",
         name: "用户注册",
         component: UserRegisterPage,
+      },
+      {
+        path: "/user/info",
+        name: "用户信息",
+        props: true,
+        component: UserInfoView,
       },
     ],
     meta: {

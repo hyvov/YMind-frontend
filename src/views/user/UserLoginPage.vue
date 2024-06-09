@@ -66,6 +66,7 @@ const handleSubmit = async () => {
   const res = await userLoginUsingPost(form);
   if (res.data.code === 0) {
     await loginUserStore.fetchLoginUser();
+    localStorage.setItem("token", res.data.data.token);
     // ElMessage.success("登录成功")
     ElMessage({
       showClose: true,
@@ -73,6 +74,7 @@ const handleSubmit = async () => {
       type: "success",
     });
     // message.success("登录成功");
+    //登录成功跳转主页
     router.push({
       path: "/",
       replace: true,
