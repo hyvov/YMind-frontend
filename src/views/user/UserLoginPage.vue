@@ -34,7 +34,7 @@
           >
             登录
           </el-button>
-          <a-link href="/user/register">新用户注册</a-link>
+          <el-link href="/user/register">新用户注册</el-link>
         </div>
       </el-form-item>
     </el-form>

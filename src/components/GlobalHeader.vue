@@ -56,7 +56,9 @@
         </el-dropdown>
       </div>
       <div v-else>
-        <a-button type="primary" href="/user/login">登录</a-button>
+        <el-link type="primary" href="/user/login" link="/user/login"
+          >登录</el-link
+        >
       </div>
     </el-col>
   </el-row>

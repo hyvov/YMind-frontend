@@ -57,7 +57,6 @@ import { reactive } from "vue";
 import API from "@/api";
 import { userRegisterUsingPost } from "@/api/userController";
 import { ElMessage } from "element-plus";
-// import message from "@arco-design/web-vue/es/message";
 import { useRouter } from "vue-router";
 
 const router = useRouter();

@@ -21,7 +21,7 @@ export const useLoginUserStore = defineStore("counter", () => {
       //判断res.data.code是否为0和res.data.data是否存在
       loginUser.value = res.data.data; //改变登录用户状态值
     } else {
-      loginUser.value = { userRole: ACCESS_ENUM.NOT_LOGIN };
+      loginUser.value = { userRole: ACCESS_ENUM.NOT_LOGIN };6
     }
   }
 

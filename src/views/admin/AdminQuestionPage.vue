@@ -77,9 +77,6 @@
     layout="prev, pager, next"
     style="display: flex; justify-content: center"
   />
-
-
-
 </template>
 
 <script setup lang="ts">
@@ -121,7 +118,6 @@ const loadData = async () => {
     } else {
       total.value = Number(1);
     }
-
   } else {
     message.error("获取数据失败，" + res.data.message);
   }

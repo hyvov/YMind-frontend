@@ -17,12 +17,9 @@
 
 <script setup lang="ts">
 import BasicLayout from "@/layouts/BasicLayout.vue";
-import UserLayout from "@/layouts/UserLayout.vue";
 import { useRoute } from "vue-router";
 import { onMounted } from "vue";
 import { getLoginUserUsingGet } from "@/api/userController";
-import { useLoginUserStore } from "@/store/userStore";
-
 const route = useRoute();
 
 /**
