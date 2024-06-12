@@ -46,19 +46,22 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>
-                <a-anchor-link href="/user/info">个人信息</a-anchor-link>
+                <el-link href="/user/info">个人信息</el-link>
               </el-dropdown-item>
+
               <!--              <el-dropdown-item>Action 2</el-dropdown-item>-->
               <!--              <el-dropdown-item disabled>Action 4</el-dropdown-item>-->
               <el-dropdown-item divided @click="logout">注销</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
+
+        <FirendView />
       </div>
       <div v-else>
         <el-link type="primary" href="/user/login" link="/user/login"
-          >登录</el-link
-        >
+          >登录
+        </el-link>
       </div>
     </el-col>
   </el-row>
@@ -71,6 +74,7 @@ import { useRoute } from "vue-router";
 import { userLogoutUsingPost } from "@/api/userController";
 import { useLoginUserStore } from "@/store/userStore";
 import checkAccess from "@/access/checkAccess";
+import FirendView from "@/components/FirendView.vue";
 
 const loginUserStore = useLoginUserStore();
 
@@ -81,6 +85,17 @@ router.afterEach((to, from, failure) => {
   console.log("selectedIndex" + selectedIndex.value);
   selectedIndex.value = [to.path];
 });
+
+// document.addEventListener("mousemove", function (event) {
+//   const triggerZoneWidth = 10; // 触发区域的宽度
+//   const viewportWidth = window.innerWidth;
+//   const mouseX = event.clientX;
+//
+//   if (viewportWidth - mouseX <= triggerZoneWidth) {
+//     console.log("鼠标靠近最右侧区域");
+//     // 在这里添加你想要触发的事件
+//   }
+// });
 
 // const selectedIndex = ref(route.path); // 初始时选中第一个菜单项
 // watch(

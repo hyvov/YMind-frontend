@@ -32,17 +32,21 @@
       :grid-props="{ gutter: [20, 20], sm: 24, md: 12, lg: 8, xl: 6 }"
       :bordered="false"
       :data="dataList"
-      :pagination-props="{
-        pageSize: searchParams.pageSize,
-        current: searchParams.current,
-        total,
-      }"
-      @page-change="onPageChange"
     >
       <template #item="{ item }">
         <AppCard :app="item" />
       </template>
     </a-list>
+
+    <el-pagination
+      background
+      :total="total"
+      :page-size="searchParams.pageSize"
+      :current-page="searchParams.current"
+      @current-change="onPageChange"
+      layout="prev, pager, next"
+      style="display: flex; justify-content: center"
+    />
   </div>
 </template>
 
@@ -79,7 +83,14 @@ const loadData = async () => {
   const res = await listAppVoByPageUsingPost(params);
   if (res.data.code === 0) {
     dataList.value = res.data.data?.records || [];
-    total.value = res.data.data?.total || 0;
+    // total.value = res.data.data?.total || 0;
+    // 细化的 total 赋值逻辑 上面的操作不知道为什么无法在el分页组件中无法读取total值
+    if (res.data.data?.total) {
+      const parsedTotal = Number(res.data.data?.total);
+      total.value = parsedTotal;
+    } else {
+      total.value = Number(1);
+    }
   } else {
     message.error("获取数据失败，" + res.data.message);
   }

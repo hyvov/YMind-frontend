@@ -10,10 +10,8 @@
       </el-main>
 
       <el-footer class="footer"
-        ><a href="https://github.com/hyvov" target="_blank">
-          项目地址
-        </a></el-footer
-      >
+        ><a href="https://github.com/hyvov" target="_blank"> </a
+      ></el-footer>
     </el-container>
   </div>
 </template>
@@ -46,11 +44,11 @@ import GlobalHeader from "../components/GlobalHeader.vue";
 }
 
 #basicLayout .footer {
-  max-height: 45px;
   position: fixed;
   right: 0;
   bottom: 0;
   left: 0;
+  max-height: 45px;
   padding: 16px;
   text-align: center;
   background: #efefef;
